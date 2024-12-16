@@ -1,0 +1,224 @@
+classDiagram
+    class Company {
+        Name : string
+        Address : string
+        list<Department> departments : list
+        +addDepartment()
+        +removeDepartment()
+    }
+
+    class Department {
+        Dept_ID : int
+        +getName()
+        +getDept_ID()
+    }
+    
+    class HRDepartment {
+        name : String
+    }
+
+    class Development {
+        name : String
+    }
+
+    class Emp_dept{
+        Emp_ID : int 
+        Dept_ID : int 
+    }
+
+    class Project {
+        projectId : int
+        name : String
+        description : String
+        startDate : Date
+        endDate : Date
+        budget : int
+        status : String
+        +createProject()
+        +updateProject()
+        +viewProjectDetails()
+        +assignProject()
+    }
+
+    class Task {
+        taskId : int
+        name : String
+        list<Task> tasks : list
+        assignTo : Employee
+        description : String
+        startDate : Date
+        endDate : Date
+        status : String
+        priority : String
+        dependency : Task
+        +createTask()
+        +updateTask()
+        +viewTaskDetails()
+        +assignTask()
+    }
+
+    class Employee {
+        e_id : int
+        userName : string
+        name : String
+        email : String
+        role : Role
+        password : String
+        addreass : String
+        alternateEmail : String
+        alternaleContactNumber : long
+        EmergencyContactName : string
+        EmergencyContactNumber : long
+        NomineeName : String
+        NomineeShare : int
+        isActive : boolean
+
+        EmployeeType : EmployeeType
+        department : Department
+        Emp_dept : Emp_dept
+        leaveBalance : LeaveEntitlement
+        bankDetails : BankDetails
+        accessLevel : String 
+
+        + viewSalarySlip_wrapper()
+        + viewLeaveBalance_wrapper()
+        + leaveHistory_wrapper()
+        + requestForLeave_wrapper()
+
+        + changePassword()
+        + viewDetails()
+        + updateNomineeName()
+        + updateNomineeShare()
+        + updateAlternateEmail()
+        + updateAlternateNumber()
+        + updateEmergencyContactName()
+        + updateEmergencyContactNumber()
+        + updateAddress()
+        
+
+    }
+
+    class EmployeeType {
+        - typeName: String
+        + addType(typeName: String): void
+        + removeType(typeName: String): void
+        + getAllTypes(): List<String>
+        + veiwType() : String
+    }
+
+    class Manager {
+        +addRole(role : Role)
+        +removeRole(role : Role)
+        +assignRole(employee : Employee, role : String)
+    }
+    class Developer{
+        
+    }
+
+    class HR_Manager {
+        + changeLeaveEntitlement()
+        + addRole(role : Role)
+        + removeRole(role : Role)
+        + approveAndRejectLeave()
+        + addEmployee()
+        + viewEmployee()
+        + updateEmployee()
+        + deactivateEmployee()
+        + viewAllEmployees() : list<Employee>
+        + viewAllActiveEmployees() : list<Employee>
+        + viewAllInactiveEmployees() : list<Employee>
+        + searchByEmployeeByID() : Employee
+        + searchByEmployeeByName() : Employee
+
+        + addBonus()
+        + addRole()
+        + manageEmployeeType()
+        + calculateSalary()
+        + assignRole(employee : Employee, role : String)
+        + generateSalarySlip(employee : Employee)
+        + changeSalaryStructure(employee : Employee, newSalary : SalaryStructure)
+    }
+
+
+    class Role {
+        -id : int
+        -name : String
+
+        + getAllRoles() : List<Role>
+    }
+    class CEO {
+        +changeSalaryStructure
+        +assignRole
+        +assignProject
+        +assignTask
+    }
+
+    class LeaveEntitlement {
+        -sickLeaves : int
+        -personalLeaves : int
+    }
+
+    class BankDetails {
+        Bank_Name : String
+        Bank_branch : String
+        Bank_IFSCode : String
+        Account_no : long
+        +viewBankDetails()
+    }
+
+    class SalarySlip {
+        slipId : int
+        employeeId : int
+        month : Date
+        CTC : int
+        Allowances : int
+        Deduction : int
+        Bonus : int
+
+        + viewSalarySlip()
+        + generateSlip()
+    }
+
+    class LeaveTransaction {
+        -id : int
+        employeeId : int
+        leaveType : String
+        days : int
+        approvers : list<Employee>
+        status : String  
+        decisionDate : Date
+
+        +logLeaveRequest()
+        +updateLeaveBalance()
+        +sendRequestForApproval()
+        +viewLeaveHistory()
+    }
+
+    %% Relationships
+    Company "1" --> "*" Department : Has a
+    LeaveEntitlement "1" <-- "1" Employee : Has a
+    Department  <--> Emp_dept
+    Employee --> EmployeeType : "1..1 uses"
+    HR_Manager --> EmployeeType : "manages"
+ 
+    Emp_dept  <--  Employee : Assigned to
+    
+    LeaveTransaction --> LeaveEntitlement : Updates Leave Balance
+    Company "1" --> "*" Employee : Has a
+    Role <|-- Manager
+    Role <|-- Developer
+    Role <|-- CEO
+    Role <|-- HR_Manager
+    CEO --> HR_Manager : change Salary Structure
+    Project "*" <-- "1" Manager : Managed by
+    Task "1..*" <-- "1" Project : Belongs to
+    Task "1..*" <--> "1..*" Employee : Assigned to
+    Department <|-- HRDepartment
+    Department <|-- Development
+    Employee "1" --> "1" Role : Assigned to
+    Employee "1" --> "*" Role : Holds
+    Employee "1" --> "1" BankDetails : Has a
+    Employee "0..*" --> "*" LeaveTransaction : request For Leave
+    Employee "1" --> "*" SalarySlip : Can view SalarySlip
+    HR_Manager "1" --> "*" SalarySlip : Generates SalarySlips
+    LeaveTransaction "0..*" --> "*" Manager : Approves

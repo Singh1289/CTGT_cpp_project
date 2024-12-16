@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant M as Manager
+    participant P as Project
+    participant T as Task
+    participant E as Employee
+   
+
+    M->>P: Create new project (name, description, start date, budget)
+    P->>M: Project created successfully
+    
+    M->>T: Create task (task details)
+    T->>M: Task created successfully
+    
+    M->>T: Assign task to employee (E)
+    T->>E: Task assigned to employee
+    
+    E->>T: Update task status (in progress)
+    T->>M: Task status updated
+    
+    E->>T: Update task status (completed)
+    T->>M: Task completed
+    
+    M->>P: Update project status (in progress)
+    
+    
+    M->>P: Mark project as completed
+    
+    M->>E: Notify employees about project completion

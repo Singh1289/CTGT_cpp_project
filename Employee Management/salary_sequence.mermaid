@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant HR as HR_Manager
+    participant CEO as CEO
+    participant E as Employee
+    participant SS as SalarySlip
+    participant DB as Database
+
+    E->>SS: Request for salary slip
+    SS->>DB: Fetch salary details from database
+    DB->>SS: Return salary details
+    SS->>E: Provide salary slip
+
+    HR->>SS: Generate salary slip for employee
+    SS->>HR: Salary slip generated
+    SS->DB: save salaryslip to database
+    
+    HR->>CEO: Request to change salary structure
+    HR->>DB: Fetch current salary structure from database
+    DB->>HR: Return current salary structure
+    HR->>CEO: Display current salary structure
+    
+    CEO->>HR: Request for salary structure change (new salary details)
+    HR->>DB: Update salary structure in the database
+    DB->>HR: Confirm salary structure updated
+    HR->>CEO: Confirm salary structure change

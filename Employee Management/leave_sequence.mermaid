@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant E as Employee
+    
+    participant LT as LeaveTransaction
+    participant M as Manager
+    
+    E->>LT: Request for leave (days, type)
+    LT->>M: Send leave request for approval
+   
+    LT->>E: Notify employee leave approval
+    M->>LT: Approve leave and update balance
+    LT->>E: Notify leave status (approved/rejected)

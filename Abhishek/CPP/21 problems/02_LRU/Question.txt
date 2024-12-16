@@ -1,0 +1,16 @@
+Implement an LRU (Least Recently Used) Cache. Your task is to design a data structure that supports the following operations:
+
+get(key): Returns the value of the key if the key exists, otherwise returns -1.
+put(key, value): Inserts or updates a key-value pair. If the cache exceeds its capacity, it should remove the least recently used item before inserting the new one.
+The cache should be able to handle up to 10^4 operations efficiently.
+
+Input:
+Operations get(key) or put(key, value) are performed in sequence.
+Output:
+For each get(key) operation, return the corresponding value or -1 if not found.
+
+Constraints:
+The cache has a fixed capacity (e.g., 3 for testing purposes).
+Implement with time complexity O(1) for both operations.
+
+
